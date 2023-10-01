@@ -35,6 +35,7 @@ class App(PasswordGenerator):
         PasswordGenerator.__init__(self)
         self.WIDTH = 500
         self.HEIGHT = 700
+        self.password = ""
         self.lenght = 6
         self.special_symbols = False
         self.master = ctk.CTk()
@@ -86,10 +87,9 @@ class App(PasswordGenerator):
                       command=self.password_gen_button, text="Generate password", font=("Roboto", 20)
                       ).place(relx=0.5, rely=0.5, anchor=tk.CENTER)
         ctk.CTkButton(self.frame_result, width=200, height=50, corner_radius=8,
-                      command=self.password_gen_button, text="Copy to clipboard", font=("Roboto", 20)
+                      command=lambda: pyperclip.copy(self.password), text="Copy to clipboard", font=("Roboto", 20)
                       ).place(relx=0.5, rely=0.8, anchor=tk.CENTER)
         
-
 
 
 if __name__ == "__main__":
