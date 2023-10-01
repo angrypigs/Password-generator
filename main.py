@@ -79,16 +79,19 @@ class App(PasswordGenerator):
         self.symbols_slider.place(relx=0.25, rely=0.8, anchor=tk.CENTER)
         self.symbols_slider.set(0)
         # result frame
-        self.frame_result = ctk.CTkFrame(self.master, width=400, height=250, corner_radius=10)
-        self.frame_result.place(relx=0.5, rely=0.75, anchor=tk.CENTER)
+        self.frame_result = ctk.CTkFrame(self.master, width=400, height=60, corner_radius=10)
+        self.frame_result.place(relx=0.5, rely=0.6, anchor=tk.CENTER)
         self.result_label = ctk.CTkLabel(self.frame_result, text="", font=("Roboto", 30))
-        self.result_label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
-        ctk.CTkButton(self.frame_result, width=200, height=50, corner_radius=8,
+        self.result_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        # buttons frame
+        self.frame_buttons = ctk.CTkFrame(self.master, width=400, height=180, corner_radius=10)
+        self.frame_buttons.place(relx=0.5, rely=0.82, anchor=tk.CENTER)
+        ctk.CTkButton(self.frame_buttons, width=200, height=50, corner_radius=8,
                       command=self.password_gen_button, text="Generate password", font=("Roboto", 20)
-                      ).place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-        ctk.CTkButton(self.frame_result, width=200, height=50, corner_radius=8,
+                      ).place(relx=0.5, rely=0.3, anchor=tk.CENTER)
+        ctk.CTkButton(self.frame_buttons, width=200, height=50, corner_radius=8,
                       command=lambda: pyperclip.copy(self.password), text="Copy to clipboard", font=("Roboto", 20)
-                      ).place(relx=0.5, rely=0.8, anchor=tk.CENTER)
+                      ).place(relx=0.5, rely=0.7, anchor=tk.CENTER)
         
 
 
