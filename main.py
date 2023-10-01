@@ -5,7 +5,6 @@ import math
 from itertools import chain
 import pyperclip
 
-
 class PasswordGenerator:
 
     def __init__(self) -> None:
@@ -36,6 +35,8 @@ class App(PasswordGenerator):
         PasswordGenerator.__init__(self)
         self.WIDTH = 500
         self.HEIGHT = 700
+        self.lenght = 6
+        self.special_symbols = False
         self.master = ctk.CTk()
         self.master.geometry(f"{self.WIDTH}x{self.HEIGHT}")
         self.master.title("Password generator")
@@ -43,13 +44,52 @@ class App(PasswordGenerator):
         self.init_menu()
         self.master.mainloop()
 
+    def lenght_slider_method(self, value) -> None:
+        self.lenght = int(value)
+        self.lenght_label.configure(text=f"Password lenght: {int(value)}")
+    
+    def symbols_slider_method(self, value) -> None:
+        self.special_symbols = bool(int(value))
+
+    def password_gen_button(self) -> None:
+        self.password = self.generate_password(self.lenght, self.special_symbols)
+        self.result_label.configure(text=self.password)
+
     def init_menu(self) -> None:
+        # title frame
         self.frame_title = ctk.CTkFrame(self.master, width=400, height=80, corner_radius=10)
         self.frame_title.place(relx=0.5, rely=0.12, anchor=tk.CENTER)
+        ctk.CTkLabel(self.frame_title, text="Password generator", font=("Roboto", 30)).place(
+            relx=0.5, rely=0.5, anchor=tk.CENTER)
+        # options frame
         self.frame_options = ctk.CTkFrame(self.master, width=400, height=200, corner_radius=10)
         self.frame_options.place(relx=0.5, rely=0.37, anchor=tk.CENTER)
+        self.lenght_label = ctk.CTkLabel(self.frame_options, text="Password lenght: 0", font=("Roboto", 20))
+        self.lenght_label.place(relx=0.5, rely=0.18, anchor=tk.CENTER)
+        self.lenght_slider = ctk.CTkSlider(self.frame_options, width=300, height=20, from_=6, to=20, 
+                      number_of_steps=14, command=self.lenght_slider_method)
+        self.lenght_slider.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
+        self.lenght_slider.set(10)
+        self.lenght_slider_method(10)
+        ctk.CTkLabel(self.frame_options, text="Special symbols", font=("Roboto", 20)).place(
+            relx=0.25, rely=0.6, anchor=tk.CENTER)
+        self.symbols_slider = ctk.CTkSlider(self.frame_options, width=60, height=30, from_=0, to=1, 
+                      number_of_steps=1, command=self.symbols_slider_method)
+        self.symbols_slider.place(relx=0.25, rely=0.8, anchor=tk.CENTER)
+        self.symbols_slider.set(0)
+        # result frame
         self.frame_result = ctk.CTkFrame(self.master, width=400, height=250, corner_radius=10)
         self.frame_result.place(relx=0.5, rely=0.75, anchor=tk.CENTER)
+        self.result_label = ctk.CTkLabel(self.frame_result, text="", font=("Roboto", 30))
+        self.result_label.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
+        ctk.CTkButton(self.frame_result, width=200, height=50, corner_radius=8,
+                      command=self.password_gen_button, text="Generate password", font=("Roboto", 20)
+                      ).place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        ctk.CTkButton(self.frame_result, width=200, height=50, corner_radius=8,
+                      command=self.password_gen_button, text="Copy to clipboard", font=("Roboto", 20)
+                      ).place(relx=0.5, rely=0.8, anchor=tk.CENTER)
+        
+
 
 
 if __name__ == "__main__":
